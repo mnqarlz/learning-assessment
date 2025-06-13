@@ -1,0 +1,23 @@
+{
+    "name": "bitbuddies/backend",
+    "description": "A Backend REST API using Slim PHP 4 For Learning Assesment System",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Adam asd",
+            "email": "asd.dev@gmail.com"
+        }
+    ],
+    "require": {
+        "slim/slim": "^4.14",
+        "slim/psr7": "^1.7",
+        "php": "^8.0",
+        "php-di/php-di": "^7.0",
+        "monolog/monolog": "^3.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
