@@ -9,6 +9,10 @@ use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
+use Illuminate\Contracts\Translation\Translator;
+use Illuminate\Translation\ArrayLoader;
+use Illuminate\Translation\Translator as IlluminateTranslator;
+use Illuminate\Validation\Factory as ValidationFactory;
 
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
@@ -25,6 +29,35 @@ return function (ContainerBuilder $containerBuilder) {
             $logger->pushHandler($handler);
 
             return $logger;
+        },
+        PDO::class => function (ContainerInterface $c) {
+            $settings = $c->get(SettingsInterface::class);
+            $db = $settings->get('db');
+
+            $dsn = sprintf(
+                '%s:host=%s;port=%s;dbname=%s;',
+                $db['driver'],
+                $db['host'],
+                $db['port'],
+                $db['database']
+            );
+
+            return new PDO($dsn, $db['username'], $db['password'], $db['flags']);
+        },
+
+        Translator::class => function (ContainerInterface $c) {
+            $loader = new \Illuminate\Translation\FileLoader(
+                new \Illuminate\Filesystem\Filesystem(),
+                __DIR__ . '/../resources/lang'
+            );
+            
+            return new IlluminateTranslator($loader, 'en');
+        },
+        
+        ValidationFactory::class => function (ContainerInterface $c) {
+            $translator = $c->get(Translator::class);
+            return new ValidationFactory($translator, null);
+
         },
     ]);
 };

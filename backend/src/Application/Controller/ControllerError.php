@@ -1,12 +1,11 @@
 <?php
-
 declare(strict_types=1);
 
-namespace App\Util\Actions;
+namespace App\Application\Controller;
 
 use JsonSerializable;
 
-class ActionError implements JsonSerializable
+class ControllerError implements JsonSerializable
 {
     public const BAD_REQUEST = 'BAD_REQUEST';
     public const INSUFFICIENT_PRIVILEGES = 'INSUFFICIENT_PRIVILEGES';

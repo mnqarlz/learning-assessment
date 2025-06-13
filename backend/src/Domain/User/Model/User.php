@@ -1,14 +1,13 @@
 <?php
-
 declare(strict_types=1);
 
-namespace App\Domain\User;
+namespace App\Domain\User\Model;
 
 use JsonSerializable;
 
 class User implements JsonSerializable
 {
-    private ?int $id;
+    private ?string $id;
 
     private string $username;
 
@@ -16,7 +15,7 @@ class User implements JsonSerializable
 
     private string $lastName;
 
-    public function __construct(?int $id, string $username, string $firstName, string $lastName)
+    public function __construct(?string $id, string $username, string $firstName, string $lastName)
     {
         $this->id = $id;
         $this->username = strtolower($username);
@@ -24,7 +23,7 @@ class User implements JsonSerializable
         $this->lastName = ucfirst($lastName);
     }
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }

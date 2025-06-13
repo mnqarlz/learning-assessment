@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace App\Application\Handlers;
 
-use App\Util\Actions\ActionError;
-use App\Util\Actions\ActionPayload;
-use Psr\Http\Message\ResponseInterface as Response;
-use Slim\Exception\HttpBadRequestException;
-use Slim\Exception\HttpException;
-use Slim\Exception\HttpForbiddenException;
-use Slim\Exception\HttpMethodNotAllowedException;
+use App\Application\Controller\ControllerPayload;
+use Throwable; 
+use Slim\Exception\HttpException; 
 use Slim\Exception\HttpNotFoundException;
-use Slim\Exception\HttpNotImplementedException;
+use Slim\Exception\HttpForbiddenException;
+use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpUnauthorizedException;
+use App\Application\Controller\ControllerError;
+use Slim\Exception\HttpNotImplementedException;
+use Slim\Exception\HttpMethodNotAllowedException;
+use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Handlers\ErrorHandler as SlimErrorHandler;
-use Throwable;
 
 class HttpErrorHandler extends SlimErrorHandler
 {
@@ -26,8 +26,8 @@ class HttpErrorHandler extends SlimErrorHandler
     {
         $exception = $this->exception;
         $statusCode = 500;
-        $error = new ActionError(
-            ActionError::SERVER_ERROR,
+        $error = new ControllerError(
+            ControllerError::SERVER_ERROR,
             'An internal error has occurred while processing your request.'
         );
 
@@ -36,17 +36,17 @@ class HttpErrorHandler extends SlimErrorHandler
             $error->setDescription($exception->getMessage());
 
             if ($exception instanceof HttpNotFoundException) {
-                $error->setType(ActionError::RESOURCE_NOT_FOUND);
+                $error->setType(ControllerError::RESOURCE_NOT_FOUND);
             } elseif ($exception instanceof HttpMethodNotAllowedException) {
-                $error->setType(ActionError::NOT_ALLOWED);
+                $error->setType(ControllerError::NOT_ALLOWED);
             } elseif ($exception instanceof HttpUnauthorizedException) {
-                $error->setType(ActionError::UNAUTHENTICATED);
+                $error->setType(ControllerError::UNAUTHENTICATED);
             } elseif ($exception instanceof HttpForbiddenException) {
-                $error->setType(ActionError::INSUFFICIENT_PRIVILEGES);
+                $error->setType(ControllerError::INSUFFICIENT_PRIVILEGES);
             } elseif ($exception instanceof HttpBadRequestException) {
-                $error->setType(ActionError::BAD_REQUEST);
+                $error->setType(ControllerError::BAD_REQUEST);
             } elseif ($exception instanceof HttpNotImplementedException) {
-                $error->setType(ActionError::NOT_IMPLEMENTED);
+                $error->setType(ControllerError::NOT_IMPLEMENTED);
             }
         }
 
@@ -58,7 +58,7 @@ class HttpErrorHandler extends SlimErrorHandler
             $error->setDescription($exception->getMessage());
         }
 
-        $payload = new ActionPayload($statusCode, null, $error);
+        $payload = new ControllerPayload($statusCode, null, $error);
         $encodedPayload = json_encode($payload, JSON_PRETTY_PRINT);
 
         $response = $this->responseFactory->createResponse($statusCode);

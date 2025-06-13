@@ -2,7 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\User;
+namespace App\Domain\User\Repository;
+
+use App\Domain\User\Model\User;
+use App\Exceptions\UserNotFoundException;
 
 interface UserRepository
 {
@@ -16,5 +19,7 @@ interface UserRepository
      * @return User
      * @throws UserNotFoundException
      */
-    public function findUserOfId(int $id): User;
+    public function findById(String $id): ?User;
+
+    public function createUser(User $user): void;
 }

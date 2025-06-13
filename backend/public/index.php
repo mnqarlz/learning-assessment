@@ -10,13 +10,14 @@ use App\Application\Settings\SettingsInterface;
 use App\Application\ResponseEmitter\ResponseEmitter; 
 
 require __DIR__ . '/../vendor/autoload.php';
+Dotenv\Dotenv::createUnsafeImmutable(__DIR__ . '/../')->load();
 
 // Instantiate PHP-DI ContainerBuilder
 $containerBuilder = new ContainerBuilder();
 
-if (false) { // Should be set to true in production
-	$containerBuilder->enableCompilation(__DIR__ . '/../var/cache');
-}
+// if (false) { // Should be set to true in production
+// 	$containerBuilder->enableCompilation(__DIR__ . '/../var/cache');
+// }
 
 // Set up settings
 $settings = require __DIR__ . '/../app/settings.php';
@@ -29,6 +30,14 @@ $dependencies($containerBuilder);
 // Set up repositories
 $repositories = require __DIR__ . '/../app/repositories.php';
 $repositories($containerBuilder);
+
+// Set up service
+$controller = require __DIR__ . '/../app/service.php';
+$controller($containerBuilder);
+
+// Set up controller
+$controller = require __DIR__ . '/../app/controller.php';
+$controller($containerBuilder);
 
 // Build PHP-DI Container instance
 $container = $containerBuilder->build();
