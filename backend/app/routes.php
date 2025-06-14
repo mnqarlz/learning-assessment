@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 use Slim\App; 
 use App\Application\Middleware\JwtMiddleware;
+use App\Infrastructure\Database\StudentDatabase;
+use App\Infrastructure\Service\ConnectBasicTest;
 use App\Infrastructure\Controller\AuthController;
 use App\Infrastructure\Controller\UserController;
 use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ServerRequestInterface as Request; 
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
+use App\Infrastructure\Persistence\MySql\MySqlStudentRepository;
 
 return function (App $app) {
 
@@ -25,13 +28,15 @@ return function (App $app) {
 
         // test db connect ke tak
         $app->get('/db-test', function (Request $request, Response $response, array $args) {
-            $pdo = $this->get(PDO::class);
+         
         
+            $studentDb = $this->get(StudentDatabase::class);
+ 
+            $repo = new MySqlStudentRepository($studentDb);
             try {
-                $stmt = $pdo->query('SELECT 1');
-                $result = $stmt->fetch();
-        
-                $response->getBody()->write("DB Test Passed. Result: " . json_encode($result));
+                $users = $repo->findAll();
+                $response->getBody()->write("DB Test Success: " . json_encode($users));
+
             } catch (PDOException $e) {
                 $response->getBody()->write("DB Test Failed: " . $e->getMessage());
             }
@@ -46,4 +51,5 @@ return function (App $app) {
         });
         
     })->add(JwtMiddleware::class);
+ 
 };

@@ -28,7 +28,7 @@ class AuthController extends Controller {
     }
 
     $validation = $this->validateRequest($data, [
-        'username' => 'required|string|min:3|max:20|alpha_num', 
+        'email' => 'required|email', 
         'password' => 'required|string|min:6|max:15'
     ]);
 
@@ -40,12 +40,12 @@ class AuthController extends Controller {
 
     try{
       $user = $this->userService->authenticateUser(
-        $validatedData['username'],
+        $validatedData['email'],
         $validatedData['password']
       );
 
       $payload = [
-        'username' => $validatedData['username'], 
+        'email' => $validatedData['email'], 
         'iat' => time(),
         'exp' => time() + 60 * 60 * 24, // 24 hours
       ];
