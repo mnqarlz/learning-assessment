@@ -1,5 +1,5 @@
 <template>
-  <div class="md:grid md:grid-cols-2 h-screen">
+  <div class="grid md:grid-cols-2 h-screen">
     <div class="flex items-center justify-center">
       <div class="md:mx-auto md:container px-14">
         <h1 class="md:text-4xl font-bold text-primary">Log In</h1>
@@ -13,7 +13,7 @@
             >
           </div>
 
-          <div class="grid gap-6 mb-6 md:grid-cols-2">
+          <div class="grid gap-6 mb-6 lg:grid-cols-2">
             <div>
               <InputLogin />
               <div class="mt-2 text-right">

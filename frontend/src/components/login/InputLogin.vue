@@ -38,7 +38,7 @@
         type="submit"
         :disabled="isSubmitting || !meta.valid"
         :class="[
-          'text-white text-sm font-medium rounded-md block w-full py-2.5 focus:outline-none focus:ring-2 focus:ring-opacity-50 flex items-center justify-center space-x-2 login-button transition-all duration-200 cursor-not-allowed',
+          'text-white text-sm font-medium rounded-md   w-full py-2.5 focus:outline-none focus:ring-2 focus:ring-opacity-50 flex items-center justify-center space-x-2 login-button transition-all duration-200 cursor-not-allowed',
           meta.valid && !isSubmitting
             ? 'bg-primary hover:bg-[#77263F] hover:cursor-pointer focus:ring-primary'
             : 'bg-primary opacity-75',
