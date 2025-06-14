@@ -1,0 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet');
+@import 'tailwindcss';
+
+@theme {
+  --color-primary: #872e4a;
+  --font-roboto: 'Roboto', sans-serif;
+}
