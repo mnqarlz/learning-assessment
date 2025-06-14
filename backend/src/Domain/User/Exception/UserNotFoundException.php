@@ -2,10 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Exceptions;
+namespace App\Domain\User\Exception;
 
-class UserNotFoundException extends DomainException 
+use App\Domain\DomainExceptions\DomainException;
+
+class UserNotFoundException extends DomainException
 {
-  public $message = 'The user you requested does not exist.';
-
+    public function __construct(string $identifierType = 'identifier', string $value = '')
+    {
+        $message = "User with {$identifierType} '{$value}' was not found.";
+        parent::__construct($message);
+    }
 }

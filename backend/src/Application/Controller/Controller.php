@@ -75,7 +75,7 @@ abstract class Controller
     protected function respondWithValidationErrors(array $errors): Response
     {
         $payload = json_encode([
-            'status' => 'error',
+            'status' => 'Error',
             'message' => 'Validation failed',
             'errors' => $errors
         ]);

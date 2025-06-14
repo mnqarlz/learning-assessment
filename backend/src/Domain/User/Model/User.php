@@ -9,38 +9,120 @@ class User implements JsonSerializable
 {
     private ?string $id;
 
-    private string $username;
+    private string $email;
 
     private string $firstName;
 
     private string $lastName;
 
-    public function __construct(?string $id, string $username, string $firstName, string $lastName)
+    private string $passwordHash;
+    
+    public function __construct(?string $id, string $email, string $firstName, string $lastName)
     {
         $this->id = $id;
-        $this->username = strtolower($username);
+        $this->email = strtolower($email);
         $this->firstName = ucfirst($firstName);
-        $this->lastName = ucfirst($lastName);
+        $this->lastName = ucfirst($lastName); 
     }
 
-    public function getId(): ?string
+    /**
+     * Get the value of id
+     */ 
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getUsername(): string
+    /**
+     * Set the value of id
+     *
+     * @return  self
+     */ 
+    public function setId($id)
     {
-        return $this->username;
+        $this->id = $id;
+
+        return $this;
     }
 
-    public function getFirstName(): string
+    /**
+     * Get the value of email
+     */ 
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set the value of email
+     *
+     * @return  self
+     */ 
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of firstName
+     */ 
+    public function getFirstName()
     {
         return $this->firstName;
     }
 
-    public function getLastName(): string
+    /**
+     * Set the value of firstName
+     *
+     * @return  self
+     */ 
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of lastName
+     */ 
+    public function getLastName()
     {
         return $this->lastName;
+    }
+
+    /**
+     * Set the value of lastName
+     *
+     * @return  self
+     */ 
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of passwordHash
+     */ 
+    public function getPasswordHash()
+    {
+        return $this->passwordHash;
+    }
+
+    /**
+     * Set the value of passwordHash
+     *
+     * @return  self
+     */ 
+    public function setPasswordHash($passwordHash)
+    {
+        $this->passwordHash = $passwordHash;
+
+        return $this;
     }
 
     #[\ReturnTypeWillChange]
@@ -48,7 +130,7 @@ class User implements JsonSerializable
     {
         return [
             'id' => $this->id,
-            'username' => $this->username,
+            'email' => $this->email,
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
         ];

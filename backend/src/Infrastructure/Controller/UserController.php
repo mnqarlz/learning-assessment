@@ -31,11 +31,10 @@ class UserController extends Controller {
 
   public function store(Request $request, Response $response): Response
   {
-      $this->setContext($request, $response);
+      $this->setContext($request, response: $response);
    
       $data = $request->getParsedBody();
-      
-      // Now validation should work
+       
       $validation = $this->validateRequest($data, [
           'username' => 'required|string|min:3|max:50|alpha_num',
           'firstname' => 'required|string|min:2|max:100|alpha',
