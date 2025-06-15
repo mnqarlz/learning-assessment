@@ -3,5 +3,23 @@
 
 @theme {
   --color-primary: #872e4a;
+  --color-primary-darker: #77263f;
   --font-roboto: 'Roboto', sans-serif;
 }
+
+@layer components {
+  .success-input {
+    @apply bg-green-50 border-green-500 text-green-700 focus:ring-green-500 focus:border-green-500;
+  }
+
+  .error-input {
+    @apply bg-red-50 border-red-500 text-red-700 focus:ring-red-500 focus:border-red-500;
+  }
+}
+
+/* 
+@layer base {
+  html {
+
+  }
+} */
