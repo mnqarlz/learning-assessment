@@ -78,10 +78,7 @@ import { EyeIcon, EyeOffIcon, LockIcon, ArrowRightIcon, MailIcon } from 'lucide-
 const validationSchema = toTypedSchema(
   z.object({
     email: z.email(),
-    password: z
-      .string()
-      .min(1, 'Matric number is required')
-      .min(5, 'Matric number must be at least 5 characters'),
+    password: z.string().min(4, 'password is required'),
   }),
 )
 
